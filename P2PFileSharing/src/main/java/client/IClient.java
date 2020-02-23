@@ -73,5 +73,5 @@ public interface IClient extends Remote {
 	 * @return true, if successful
 	 * @throws RemoteException the remote exception
 	 */
-	public boolean receiveClientFile(String fileName, byte[] data, int bytesToRead, long totalBytesRead) throws RemoteException;
+	public boolean receiveClientFile(String fileName, byte[] data, int bytesToRead, long totalBytesRead, boolean fileTransferred) throws RemoteException;
 }

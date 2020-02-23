@@ -325,7 +325,13 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
 	 * @param totalBytesRead the total bytes read
 	 * @return true, if successful
 	 */
-	public synchronized boolean receiveClientFile(String fileName, byte[] data, int bytes, long totalBytesRead) {
+	public synchronized boolean receiveClientFile(String fileName, byte[] data, int bytes, long totalBytesRead, boolean fileTransferred) {
+		
+		if(fileTransferred) {
+			logger.info("File '" + fileName + "' downloaded successfully.");
+			return true;
+		}
+		
 		// Receives the file from sending peer client
 		logger.info("Requested file '" + fileName + "' is downloading. Please wait.");
 		logger.info("Receiving " + bytes + " bytes");
@@ -360,6 +366,7 @@ public class Client extends UnicastRemoteObject implements IClient, Runnable {
 			logger.info("Total " + totalBytesRead + " bytes received");
 		else
 			logger.info("Failed to downlaod the file");
+		
 		return isFileDownloaded;
 	}
 

@@ -48,8 +48,8 @@ public class ClientServer extends UnicastRemoteObject implements IClientServer, 
 		this.file = file;
 		this.client = client;
 		this.peerWithFile = peerWithFile;
-		System.out.println("File:" + this.file);
-		System.out.println("Client:" + this.client.getClientName());
+//		System.out.println("File:" + this.file);
+//		System.out.println("Client:" + this.client.getClientName());
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class ClientServer extends UnicastRemoteObject implements IClientServer, 
 			
 			// Looping and transferring data 1MB at a time
 			while (bytesToRead > 0) {
-				if (client.receiveClientFile(fileToSend.getName(), byteArray, bytesToRead, totalBytesRead)) {
+				if (client.receiveClientFile(fileToSend.getName(), byteArray, bytesToRead, totalBytesRead, false)) {
 					bytesToRead = fileInputStream.read(byteArray);
 					totalBytesRead += bytesToRead;
 					fileSent = true;
@@ -189,6 +189,7 @@ public class ClientServer extends UnicastRemoteObject implements IClientServer, 
 			if(fileSent) {
 				logger.info("File '" + file + "' sent to the requested peer client: " + client.getClientName());
 				logger.info("Time taken: "+(System.currentTimeMillis() - startTime) / 1000 + " ms");
+				client.receiveClientFile(fileToSend.getName(), byteArray, bytesToRead, totalBytesRead, true);
 			}
 			
 		} catch (Exception e) {
